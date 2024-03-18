@@ -1,13 +1,19 @@
+
+// MAYUR RAJ SINGH
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 app.use(bodyParser.json());
 
-
+// Hardcoded user ID, email, and roll number
 const userId = "john_doe_17091999";
 const email = "john@xyz.com";
 const rollNumber = "ABCD123";
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // POST endpoint for /bfhl route
 app.post('/bfhl', (req, res) => {
@@ -26,6 +32,7 @@ app.post('/bfhl', (req, res) => {
         alphabets: data.filter(item => typeof item === 'string' && item.match(/[a-zA-Z]/)).map(item => item.toUpperCase())
     };
 
+    console.log(response); // Log the response to the console
     res.json(response);
 });
 
@@ -36,7 +43,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3006;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
