@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API Example</title>
+</head>
+<body>
+    <h1>REST API Example</h1>
+    <form id="dataForm" action="POST">
+        <input type="text" placeholder="Enter userID" id="user_id">
+        <input type="text" placeholder="Enter userEmail" id="userEmail">
+        <input type="text" placeholder="Enter userRollNo" id="userRollNo">
+    
+
+        <label for="dataArray">Enter data array (comma-separated):</label><br>
+        <input type="text" id="dataArray" name="dataArray"><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="output"></div>
+
+    <script>
+        document.getElementById("dataForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const user_id = document.getElementById('user_id').value;
+            const userEmail = document.getElementById('userEmail').value;
+            const userRollNo = document.getElementById('userRollNo').value;
+            const dataArray = document.getElementById("dataArray").value.split(",");
+            const postData = {  user_id ,userEmail , userRollNo , data :dataArray};
+// console.log(postData)
+            fetch('/bfhl', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display data on the webpage
+                
+                document.getElementById('output').innerHTML = `
+                    <h2>Response</h2>
+                    <p>Status: ${data.is_success}</p>
+                    <p>User ID: ${data.user_id}</p>
+                    <p>Email: ${data.email}</p>
+                    <p>Roll Number: ${data.roll_number}</p>
+                    <p>Odd Numbers: ${data.odd_numbers.join(', ')}</p>
+                    <p>Even Numbers: ${data.even_numbers.join(', ')}</p>
+                    <p>Alphabets: ${data.alphabets.join(', ')}</p>
+                `;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Display error message on the webpage
+                document.getElementById('output').innerHTML = `
+                    <h2>Error</h2>
+                    <p>Something went wrong. Please try again later.</p>🥹
+                    <p>I have tested it in POSTMAN . It was working 🥹 🥹🥹</p>
+
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
