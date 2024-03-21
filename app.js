@@ -1,14 +1,10 @@
 
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
 app.use(bodyParser.json());
-
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
 
 // POST endpoint for /bfhl route
 app.post('/bfhl', (req, res) => {
@@ -40,7 +36,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3003;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
