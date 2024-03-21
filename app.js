@@ -1,5 +1,5 @@
 
-// MAYUR RAJ SINGH
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -7,20 +7,12 @@ const path = require('path');
 const app = express();
 app.use(bodyParser.json());
 
-// Hardcoded user ID, email, and roll number
-// const userId = "john_doe_17091999";
-// const email = "john@xyz.com";
-// const rollNumber = "ABCD123";
-
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 // POST endpoint for /bfhl route
 app.post('/bfhl', (req, res) => {
     const data = req.body.data;
-
-    // Extract user info properties from userInfo
-    // const { user_id, userEmail, userRollNo } = userInfo;
 
     if (!Array.isArray(data)) {
         return res.status(400).json({ error: 'Invalid input. Data must be an array.' });
