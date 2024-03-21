@@ -8,9 +8,9 @@ const app = express();
 app.use(bodyParser.json());
 
 // Hardcoded user ID, email, and roll number
-const userId = "john_doe_17091999";
-const email = "john@xyz.com";
-const rollNumber = "ABCD123";
+// const userId = "john_doe_17091999";
+// const email = "john@xyz.com";
+// const rollNumber = "ABCD123";
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -18,15 +18,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 // POST endpoint for /bfhl route
 app.post('/bfhl', (req, res) => {
     const data = req.body.data;
+
+    // Extract user info properties from userInfo
+    // const { user_id, userEmail, userRollNo } = userInfo;
+
     if (!Array.isArray(data)) {
         return res.status(400).json({ error: 'Invalid input. Data must be an array.' });
     }
 
     const response = {
         is_success: true,
-        user_id: userId,
-        email: email,
-        roll_number: rollNumber,
+        user_id: req.body.user_id,
+        email: req.body.userEmail,
+        roll_number: req.body.userRollNo,
         odd_numbers: data.filter(num => num % 2 !== 0 && !isNaN(num)),
         even_numbers: data.filter(num => num % 2 === 0 && !isNaN(num)),
         alphabets: data.filter(item => typeof item === 'string' && item.match(/[a-zA-Z]/)).map(item => item.toUpperCase())
@@ -36,6 +40,7 @@ app.post('/bfhl', (req, res) => {
     res.json(response);
 });
 
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -43,7 +48,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-const port = process.env.PORT || 3006;
+const port = process.env.PORT || 3002;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
