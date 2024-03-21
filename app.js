@@ -6,6 +6,11 @@ const path = require('path');
 const app = express();
 app.use(bodyParser.json());
 
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('/example', (req, res) => {
+    // Send the index.html file as the response
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 // POST endpoint for /bfhl route
 app.post('/bfhl', (req, res) => {
     const data = req.body.data;
